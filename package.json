@@ -4,7 +4,8 @@
   "description": "A utility for quickly creating elements.",
   "main": "quilt.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "serve"
   },
   "keywords": [
     "html",
@@ -14,5 +15,9 @@
     "javascript"
   ],
   "author": "Ian Jabour",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {},
+  "devDependencies": {
+    "serve": "^10.1.2"
+  }
 }
