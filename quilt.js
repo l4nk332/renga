@@ -1,4 +1,12 @@
+function isValidKabobCase(string) {
+  // TODO: Possibly need to remove the ^ and $ to make less strict
+  return /^[a-z]+(-+[a-z]+)+$/gi.test(string)
+}
+
+// TODO: Handle repeated dashes/underscores in class name.
 function kabob2Camel(string) {
+  if (!isValidKabobCase(string)) return string
+
   const [head, ...tail] = string.split('-')
   const capitalizedTail = (
     tail
@@ -13,6 +21,7 @@ function isValidCamelCase(string) {
   return /^[a-z]+([A-Z][a-z]*)+$/g.test(string)
 }
 
+// TODO: Handle underscores in class names ???
 function camel2Kabob(string) {
   return (
     isValidCamelCase(string)
@@ -82,7 +91,40 @@ const ELEMENT_TYPES = [
   'li', 'figure', 'footer', 'style'
 ]
 
+function extractClassNames(string) {
+  return string.match(/\.[a-z-_]+/gi).map(className => className.slice(1))
+}
+
+function scopedStyles(module, styles) {
+  // TODO: Find replace styles with camelCased / module specific version.
+  // TODO: Return the translated classNames in object format.
+  // i.e s.wrappedContainer -> Module__wrappedContainer
+  // TODO: MVP - Add ability to add hash in.
+  let classNames = {}
+
+  const camelCasedStyles = (
+    styles
+    .replace(/\.([a-z-_]+)/gi, (_, rawClassName) => {
+      const camelClassName = kabob2Camel(rawClassName)
+      const scopedClassName = `${module}__${camelClassName}`
+
+      classNames[camelClassName] = scopedClassName
+
+      return `.${scopedClassName}`
+    })
+  )
+
+  return classNames
+}
+
+defaults = {
+  _: {},
+  scopedStyle(module, styles) {
+    return styles.replace('.', `.${module}__`)
+  }
+}
+
 export const Q = ELEMENT_TYPES.reduce((collection, type) => ({
   ...collection,
   [type]: template(type)
-}), {_: {}})
+}), defaults)
