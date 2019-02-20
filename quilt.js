@@ -72,24 +72,42 @@ function appendChildren(node, children) {
     : appendChild(node, children)
 }
 
-function template(type) {
-  return function element(attributes = {}, children = []) {
-    // TODO: Add logic to identify when attributes not provided
-    // (default to children as first arg)...
-    const node = document.createElement(type)
+function areValidChildren(children) {
+  return (
+    Array.isArray(children) ||
+    typeof children === 'string' ||
+    // TODO: Fix scenario with null being passed through...
+    ('nodeName' in children && 'nodeType' in children)
+  )
+}
 
-    setAttributes(node, attributes)
-    appendChildren(node, children)
+function template(type) {
+  return function element(attributes = null, children = null) {
+    if (areValidChildren(attributes)) {
+      children = attributes
+      attributes = null
+    }
+
+    const node = (
+      type === FRAGMENT
+        ? document.createDocumentFragment()
+        : document.createElement(type)
+    )
+
+    if (type !== FRAGMENT && attributes) setAttributes(node, attributes)
+
+    if (children) appendChildren(node, children)
 
     return node
   }
 }
 
-// TODO: Add support for document fragments...
+const FRAGMENT = 'fragment'
+
 const ELEMENT_TYPES = [
   'main', 'div', 'span', 'section', 'h1',
   'small', 'img', 'header', 'aside', 'ul',
-  'li', 'figure', 'footer', 'style'
+  'li', 'figure', 'footer', 'style', FRAGMENT
 ]
 
 function extractClassNames(string) {
