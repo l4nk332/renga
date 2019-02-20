@@ -85,6 +85,7 @@ function template(type) {
   }
 }
 
+// TODO: Add support for document fragments...
 const ELEMENT_TYPES = [
   'main', 'div', 'span', 'section', 'h1',
   'small', 'img', 'header', 'aside', 'ul',
@@ -95,34 +96,26 @@ function extractClassNames(string) {
   return string.match(/\.[a-z-_]+/gi).map(className => className.slice(1))
 }
 
-function scopedStyles(module, styles) {
-  // TODO: Find replace styles with camelCased / module specific version.
-  // TODO: Return the translated classNames in object format.
-  // i.e s.wrappedContainer -> Module__wrappedContainer
-  // TODO: MVP - Add ability to add hash in.
+function scopeStyles(module, styles, hash = '') {
   let classNames = {}
 
-  const camelCasedStyles = (
+  const scopedStyles = (
     styles
     .replace(/\.([a-z-_]+)/gi, (_, rawClassName) => {
-      const camelClassName = kabob2Camel(rawClassName)
-      const scopedClassName = `${module}__${camelClassName}`
+      const normalizedName = kabob2Camel(rawClassName)
+      const hashFragment = hash ? `${hash}__` : hash
+      const scopedName = `${module}__${hashFragment}${normalizedName}`
 
-      classNames[camelClassName] = scopedClassName
+      classNames[normalizedName] = scopedName
 
-      return `.${scopedClassName}`
+      return `.${scopedName}`
     })
   )
 
-  return classNames
+  return {classNames, styles: scopedStyles}
 }
 
-defaults = {
-  _: {},
-  scopedStyle(module, styles) {
-    return styles.replace('.', `.${module}__`)
-  }
-}
+defaults = { _: {}, scopeStyles }
 
 export const Q = ELEMENT_TYPES.reduce((collection, type) => ({
   ...collection,
