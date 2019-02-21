@@ -1,39 +1,4 @@
-function isValidKabobCase(string) {
-  // TODO: Possibly need to remove the ^ and $ to make less strict
-  return /^[a-z]+(-+[a-z]+)+$/gi.test(string)
-}
-
-// TODO: Handle repeated dashes/underscores in class name.
-function kabob2Camel(string) {
-  if (!isValidKabobCase(string)) return string
-
-  const [head, ...tail] = string.split('-')
-  const capitalizedTail = (
-    tail
-      .map(word => `${word[0].toUpperCase()}${word.slice(1)}`)
-      .join('')
-  )
-
-  return `${head}${capitalizedTail}`
-}
-
-function isValidCamelCase(string) {
-  return /^[a-z]+([A-Z][a-z]*)+$/g.test(string)
-}
-
-// TODO: Handle underscores in class names ???
-function camel2Kabob(string) {
-  return (
-    isValidCamelCase(string)
-      ? (
-        string
-          .split(/([A-Z][a-z]*)/g)
-          .filter(v => v.length)
-          .map(v => v.toLowerCase())
-          .join('-')
-      ) : string
-  )
-}
+import { ELEMENT_TYPES, FRAGMENT } from './constants.js'
 
 function coerceBoolean(value) {
   return (
@@ -102,14 +67,6 @@ function template(type) {
   }
 }
 
-const FRAGMENT = 'fragment'
-
-const ELEMENT_TYPES = [
-  'main', 'div', 'span', 'section', 'h1',
-  'small', 'img', 'header', 'aside', 'ul',
-  'li', 'figure', 'footer', 'style', FRAGMENT
-]
-
 function extractClassNames(string) {
   return string.match(/\.[a-z-_]+/gi).map(className => className.slice(1))
 }
@@ -133,9 +90,11 @@ function scopeStyles(module, styles, hash = '') {
   return {classNames, styles: scopedStyles}
 }
 
-defaults = { _: {}, scopeStyles }
+defaults = { scopeStyles }
 
-export const Q = ELEMENT_TYPES.reduce((collection, type) => ({
+const renga = ELEMENT_TYPES.reduce((collection, type) => ({
   ...collection,
   [type]: template(type)
 }), defaults)
+
+export default renga
