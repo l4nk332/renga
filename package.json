@@ -2,9 +2,9 @@
   "name": "renga",
   "version": "1.0.0",
   "description": "A utility for quickly creating DOM elements.",
-  "main": "quilt.js",
+  "main": "./src/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "./node_modules/jest/bin/jest.js",
     "dev": "serve"
   },
   "keywords": [
@@ -18,6 +18,7 @@
   "license": "MIT",
   "dependencies": {},
   "devDependencies": {
+    "jest": "^24.1.0",
     "serve": "^10.1.2"
   }
 }
