@@ -1,4 +1,4 @@
-function coerceBoolean(value) {
+export function coerceBoolean(value) {
   return (
     value && typeof value === 'boolean'
       ? ''
@@ -6,7 +6,7 @@ function coerceBoolean(value) {
   )
 }
 
-function areValidChildren(children) {
+export function areValidChildren(children) {
   return (
     Array.isArray(children) ||
     typeof children === 'string' ||
@@ -15,7 +15,7 @@ function areValidChildren(children) {
   )
 }
 
-function extractClassNames(string) {
+export function extractClassNames(string) {
   return string.match(/\.[a-z-_]+/gi).map(className => className.slice(1))
 }
 
