@@ -18,7 +18,6 @@
   "license": "MIT",
   "dependencies": {},
   "devDependencies": {
-    "jest": "^24.1.0",
     "serve": "^10.1.2"
   }
 }
