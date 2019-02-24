@@ -1,3 +1,5 @@
+import { deepEquals, negateIf } from '../src/utils/functools.js'
+
 class Harness {
   constructor() {
     this.suites = []
@@ -64,6 +66,32 @@ class Suite {
   }
 }
 
+function assert(lhs) {
+  return {
+    _negated: false,
+    equalTo(rhs) {
+      return negateIf(this._negated, deepEquals(lhs, rhs))
+    },
+    sameAs(rhs) {
+      return negateIf(this._negated, Object.is(lhs, rhs))
+    },
+    falsy() {
+      return negateIf(this._negated, Boolean(lhs))
+    },
+    truthy() {
+      return negateIf(this._negated, Boolean(lhs))
+    },
+    instanceOf(rhs) {
+      return negateIf(this._negated, lhs instanceof rhs)
+    },
+    not() {
+      this._negated = !this._negated
+      return this
+    }
+  }
+}
+
+/*
 const basicHarness = new Harness()
 
 new Suite('My First Test Suite...')
@@ -72,10 +100,11 @@ new Suite('My First Test Suite...')
   .afterEach(() => console.log('tear down per test'))
   .after(() => console.log('tear down for test suite...'))
   .tests([
-    ['Test 1', () => { console.log('basic test 1 here...') }],
+    ['Test 1', (assert) => { assert(1).equals(1) }],
     ['Test 2', () => { console.log('basic test 2 here...') }],
     ['Test 3', () => { console.log('basic test 3 here...') }]
   ])
   .register(basicHarness)
 
 basicHarness.run()
+*/
