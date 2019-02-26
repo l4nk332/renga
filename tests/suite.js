@@ -1,10 +1,16 @@
 import Harness from './harness.js'
 
+import { noop } from './utils.js'
+
 export default class Suite {
   constructor(name) {
     Harness.register(this)
+
     this._name = name
-    return this
+    this._before = noop
+    this._after = noop
+    this._beforeEach = noop
+    this._afterEach = noop
   }
 
   before(setupSuite) {

@@ -26,3 +26,5 @@ export function deepEquals(lhs, rhs) {
 export function negateIf(condition, value) {
   return condition ? !value : value
 }
+
+export function noop() {}
