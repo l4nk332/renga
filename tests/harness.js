@@ -15,7 +15,7 @@ class Harness {
   runSuite(suite) {
     suite._before()
 
-    const suiteResults = suite._tests.map(([testName, testFn]) => {
+    const results = suite._tests.map(([testName, testFn]) => {
       suite._beforeEach()
 
       const logger = new TestLogger(testName)
@@ -29,7 +29,7 @@ class Harness {
 
     suite._after()
 
-    return suiteResults
+    return [suite._name, results]
   }
 
   run(render) {
