@@ -1,37 +1,29 @@
 import { Harness } from '../../browserrt.js'
 
 function render(suites) {
-  document.body.innerHTML = suites.map(([suiteName, suiteResults]) => (
-    `
-    <dl>
-      <dt><strong>${suiteName}</strong></dt>
-      <dd>${renderSuite(suiteResults)}</dd>
-    </dl>
-    `.trim())
-  ).join('')
+  suites.forEach(([suiteName, suiteResults]) => {
+    console.group(`%c${suiteName}`, 'color: dodgerblue')
+    renderSuite(suiteResults)
+    console.groupEnd()
+  })
 }
 
 function renderSuite(suiteResults) {
-  return suiteResults.map(([testName, testResults]) => (
-    `
-    <dl>
-      <dt>${testName}</dt>
-      <dd>
-        <ul>
-          ${renderTestResults(testResults)}
-        </ul>
-      </dd>
-    </dl>
-    `
-  )).join('')
-}
-
-function renderTestResults(testResults) {
-  return (
-    testResults.length
-      ? testResults.map(testResult => `<li>${JSON.stringify(testResult)}</li>`).join('')
-      : ''
-  )
+  suiteResults.forEach(([testName, testResults]) => {
+    if (testResults.length) {
+      console.groupCollapsed('%cFAIL', 'color: indianred', testName)
+      testResults.forEach(({expected, received, message, frameLocation}) => {
+        console.group(message)
+        console.log(`Expected: ${expected}`)
+        console.log(`Received: ${received}`)
+        console.log(`Failure @ ${frameLocation}`)
+        console.groupEnd()
+      })
+      console.groupEnd()
+    } else {
+      console.log('%cPASS', 'color: mediumseagreen', testName)
+    }
+  })
 }
 
 Harness.run(render)

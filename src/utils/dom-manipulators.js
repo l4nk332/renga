@@ -4,7 +4,7 @@ function setAttributes(node, attributes) {
     .filter(([attrName, attrValue]) => attrValue !== false)
     .map(([attrName, attrValue]) => [
       camel2Kabob(attrName),
-      coerceBoolean(attrValue)
+      coerceTrue(attrValue)
     ])
     .forEach(([attrName, attrValue]) => {
       node.setAttribute(attrName, attrValue)

@@ -1,4 +1,4 @@
-export function coerceBoolean(value) {
+export function coerceTrue(value) {
   return (
     value && typeof value === 'boolean'
       ? ''
@@ -6,12 +6,14 @@ export function coerceBoolean(value) {
   )
 }
 
+// TODO: recurse through array and validate children...
 export function areValidChildren(children) {
   return (
     Array.isArray(children) ||
     typeof children === 'string' ||
-    // TODO: Fix scenario with null being passed through...
-    ('nodeName' in children && 'nodeType' in children)
+    (isPlainObject(children) &&
+     'nodeName' in children &&
+     'nodeType' in children)
   )
 }
 
@@ -19,3 +21,10 @@ export function extractClassNames(string) {
   return string.match(/\.[a-z-_]+/gi).map(className => className.slice(1))
 }
 
+export function isPlainObject(value) {
+  return (
+    typeof value === 'object' &&
+    !Array.isArray(value) &&
+    value !== null
+  )
+}

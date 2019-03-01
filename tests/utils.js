@@ -28,3 +28,21 @@ export function negateIf(condition, value) {
 }
 
 export function noop() {}
+
+export function last(iterable) {
+  return iterable.slice(-1)[0]
+}
+
+export function getFrameLocation(frameIdx) {
+  try {
+    throw new Error()
+  } catch (err) {
+    const [errType, thisFrame, ...frameList] = err.stack.split('\n')
+    const frameLocation = last(
+      frameList[frameIdx]
+        .replace(/[()]/g, '')
+        .split(' ')
+    )
+    return frameLocation
+  }
+}

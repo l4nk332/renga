@@ -1,10 +1,18 @@
-import { deepEquals, negateIf } from './utils.js'
+import { deepEquals, negateIf, getFrameLocation } from './utils.js'
 
 export default function assert(logger, lhs) {
   return {
     _negated: false,
     logFailures({expected, received, result, message}) {
-      if (!result) logger.log({ expected, received, message })
+      if (!result) {
+        const frameLocation = getFrameLocation(2)
+        logger.log({
+          expected,
+          received,
+          message,
+          frameLocation
+        })
+      }
     },
     equalTo(rhs) {
       const result = negateIf(this._negated, deepEquals(lhs, rhs))
@@ -13,7 +21,7 @@ export default function assert(logger, lhs) {
         result,
         expected: lhs,
         received: rhs,
-        message:  `Expected RHS to equal LHS...`
+        message:  `Expected ${lhs} to equal ${lhs} but received ${rhs}`
       })
 
       return result
@@ -25,7 +33,7 @@ export default function assert(logger, lhs) {
         result,
         expected: lhs,
         received: rhs,
-        message:  `Expected RHS to share reference with LHS...`
+        message:  `Expected ${lhs} to share reference with ${lhs} but received ${rhs}`
       })
 
       return result
@@ -37,7 +45,7 @@ export default function assert(logger, lhs) {
         result,
         expected: lhs,
         received: rhs,
-        message:  `Expected RHS to be instance of LHS...`
+        message:  `${lhs} is not an instance of ${rhs}...`
       })
 
       return result
