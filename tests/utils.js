@@ -4,23 +4,34 @@ export function partial(fn, ...args) {
   }
 }
 
+export function isPlainObject(value) {
+  return (
+    typeof value === 'object' &&
+    !Array.isArray(value) &&
+    value !== null
+  )
+}
+
 export function deepEquals(lhs, rhs) {
   if (Object.is(lhs, rhs)) return true
 
-  if (typeof lhs !== 'object' || typeof rhs !== 'object') return false
+  const bothPlainObjects = [lhs, rhs].every(isPlainObject)
+  const bothArrays = [lhs, rhs].every(Array.isArray)
 
-  const lhsKeys = Object.keys(lhs)
-  const rhsKeys = Object.keys(rhs)
+  if (bothPlainObjects || bothArrays) {
+    const lhsKeys = Object.keys(lhs)
+    const rhsKeys = Object.keys(rhs)
 
-  if (lhsKeys.length !== rhsKeys.length) return false
+    if (lhsKeys.length !== rhsKeys.length) return false
 
-  for (let key of lhsKeys) {
-    if (!rhsKeys.includes(key) || !deepEquals(lhs[key], rhs[key])) {
-      return false
+    for (let key of lhsKeys) {
+      if (!rhsKeys.includes(key) || !deepEquals(lhs[key], rhs[key])) {
+        return false
+      }
     }
-  }
 
-  return true
+    return true
+  } else return false
 }
 
 export function negateIf(condition, value) {

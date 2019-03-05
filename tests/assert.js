@@ -19,9 +19,9 @@ export default function assert(logger, lhs) {
 
       this.logFailures({
         result,
-        expected: lhs,
-        received: rhs,
-        message:  `Expected ${lhs} to equal ${lhs} but received ${rhs}`
+        expected: rhs,
+        received: lhs,
+        message:  `Expected ${rhs} but received ${lhs}`
       })
 
       return result
@@ -33,7 +33,7 @@ export default function assert(logger, lhs) {
         result,
         expected: lhs,
         received: rhs,
-        message:  `Expected ${lhs} to share reference with ${lhs} but received ${rhs}`
+        message:  `Expected a shared reference between ${lhs} and ${rhs}`
       })
 
       return result
@@ -45,7 +45,7 @@ export default function assert(logger, lhs) {
         result,
         expected: lhs,
         received: rhs,
-        message:  `${lhs} is not an instance of ${rhs}...`
+        message:  `Expected ${lhs} to be an instance of ${rhs}`
       })
 
       return result
