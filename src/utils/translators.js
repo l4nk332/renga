@@ -18,7 +18,7 @@ export function kabob2Camel(string) {
   return `${head}${capitalizedTail}`
 }
 
-function isValidCamelCase(string) {
+export function isValidCamelCase(string) {
   return CAMEL_CASE.test(string)
 }
 
