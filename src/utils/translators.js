@@ -11,7 +11,8 @@ export function kabob2Camel(string) {
   const [head, ...tail] = string.split('-')
   const capitalizedTail = (
     tail
-      .map(word => `${word[0].toUpperCase()}${word.slice(1)}`)
+      .filter(word => word.length)
+      .map(word => `${word[0].toUpperCase()}${word.slice(1).toLowerCase()}`)
       .join('')
   )
 
@@ -23,7 +24,7 @@ export function isValidCamelCase(string) {
 }
 
 // TODO: Handle underscores in class names ???
-function camel2Kabob(string) {
+export function camel2Kabob(string) {
   return (
     isValidCamelCase(string)
       ? (
