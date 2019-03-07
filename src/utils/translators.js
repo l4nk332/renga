@@ -4,7 +4,6 @@ export function isValidKabobCase(string) {
   return KABOB_CASE.test(string)
 }
 
-// TODO: Handle repeated dashes/underscores in class name.
 export function kabob2Camel(string) {
   if (!isValidKabobCase(string)) return string
 
@@ -23,7 +22,6 @@ export function isValidCamelCase(string) {
   return CAMEL_CASE.test(string)
 }
 
-// TODO: Handle underscores in class names ???
 export function camel2Kabob(string) {
   return (
     isValidCamelCase(string)

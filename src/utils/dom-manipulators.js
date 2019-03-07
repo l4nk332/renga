@@ -1,4 +1,9 @@
-function setAttributes(node, attributes) {
+import { coerceTrue } from './helpers.js'
+import { camel2Kabob } from './translators.js'
+
+// TODO: Add ability to set events...
+
+export function setAttributes(node, attributes) {
   Object
     .entries(attributes)
     .filter(([attrName, attrValue]) => attrValue !== false)
@@ -11,7 +16,7 @@ function setAttributes(node, attributes) {
     })
 }
 
-function appendChild(node, child) {
+export function appendChild(node, child) {
   child = (
     typeof child === 'string'
       ? document.createTextNode(child)
@@ -21,7 +26,7 @@ function appendChild(node, child) {
   node.appendChild(child)
 }
 
-function appendChildren(node, children) {
+export function appendChildren(node, children) {
   Array.isArray(children)
     ? children.forEach(child => appendChild(node, child))
     : appendChild(node, children)
