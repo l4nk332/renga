@@ -1,3 +1,3 @@
-# Quilt
+# ⚒ renga 🧱
 
-The Quick Element creator.
+Project details coming soon...
