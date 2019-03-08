@@ -1,4 +1,4 @@
-import { Suite } from '../../browserrt.js'
+import { Suite } from '../../conssert/index.js'
 
 import { scopeStyles } from '../scope-styles.js'
 

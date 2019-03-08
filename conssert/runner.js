@@ -1,4 +1,4 @@
-import { Harness } from '../../browserrt.js'
+import { Harness } from './index.js'
 
 function render(suites) {
   suites.forEach(([suiteName, suiteResults]) => {

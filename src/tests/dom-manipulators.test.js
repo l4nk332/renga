@@ -1,4 +1,4 @@
-import { Suite, Spy } from '../../browserrt.js'
+import { Suite, Spy } from '../../conssert/index.js'
 
 import {
   appendChild,
