@@ -1,9 +1,11 @@
-import { Suite } from '../../browserrt.js'
+import { Suite, Spy } from '../../browserrt.js'
 
 import {
   appendChild,
   appendChildren,
-  setAttributes
+  setAttributes,
+  setEventHandlers,
+  setStyles
 } from '../utils/dom-manipulators.js'
 
 function generateAppendNodeTests(appendFn) {
@@ -90,6 +92,57 @@ new Suite('appendChildren')
     }]
   ])
 
+new Suite('setEventHandlers')
+  .tests([
+    ['Should return node passed in untouched if events are empty', assert => {
+      setEventHandlers(document.createElement('div'), {})
+    }],
+    ['Should return node with events provided added to it.', assert => {
+      let spy = new Spy()
+      let btn = document.createElement('button')
+
+      document.body.appendChild(btn)
+      assert(spy.callCount).equalTo(0)
+      setEventHandlers(btn, {click: spy.call, focus: spy.call, blur: spy.call})
+      btn.click()
+      btn.click()
+      btn.click()
+      assert(spy.callCount).equalTo(3)
+      btn.focus()
+      assert(spy.callCount).equalTo(4)
+      btn.blur()
+      assert(spy.callCount).equalTo(5)
+      document.body.removeChild(btn)
+    }]
+  ])
+
+new Suite('setStyles')
+  .tests([
+    ['Should return node passed in untouched if events are empty', assert => {
+      setStyles(document.createElement('div'), {})
+    }],
+    ['Should return node with styles provided applied to it.', assert => {
+      let btn = document.createElement('button')
+      setStyles(btn, {
+        borderRight: '1px solid indianred',
+        fontSize: '1.5em',
+        'text-align': 'center',
+        display: 'inline-flex',
+        flexFlow: 'row nowrap',
+        alignItems: 'center',
+        justifyContent: 'center'
+      })
+
+      assert(btn.style.borderRight).equalTo('1px solid indianred')
+      assert(btn.style.fontSize).equalTo('1.5em')
+      assert(btn.style.textAlign).equalTo('center')
+      assert(btn.style.display).equalTo('inline-flex')
+      assert(btn.style.flexFlow).equalTo('row nowrap')
+      assert(btn.style.alignItems).equalTo('center')
+      assert(btn.style.justifyContent).equalTo('center')
+    }]
+  ])
+
 new Suite('setAttributes')
   .tests([
     ['Should return node passed in untouched if attributes are empty', assert => {
@@ -120,5 +173,35 @@ new Suite('setAttributes')
       })
 
       assert(div.outerHTML).equalTo('<div checked="" cols="5" lang="English" alt="Tis an alt attribute" data-id="789" data-model-name="invoice" class="button big default" id="fireTheMissiles"></div>')
-    }]
+    }],
+    ['Should properly set style / events as regular attribute if value is not plain object', assert => {
+      let div = document.createElement('div')
+      assert(div.outerHTML).equalTo('<div></div>')
+      setAttributes(div, { style: 'display: flex; align-items: center;', events: 'active' })
+
+      assert(div.outerHTML).equalTo('<div style="display: flex; align-items: center;" events="active"></div>')
+    }],
+    ['Should properly set event handlers / styles when key / object passed in.', assert => {
+      let spy = new Spy()
+
+      let div = document.createElement('div')
+      assert(div.style.display).not().equalTo('flex')
+      assert(div.style.alignItems).not().equalTo('center')
+
+      setAttributes(div, {
+        style: {
+          display: 'flex',
+          alignItems: 'center'
+        },
+        events: {
+          click(event) { spy.call() }
+        }
+      })
+
+      assert(div.style.display).equalTo('flex')
+      assert(div.style.alignItems).equalTo('center')
+      assert(spy.callCount).equalTo(0)
+      div.click()
+      assert(spy.callCount).equalTo(1)
+    }],
   ])

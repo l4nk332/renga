@@ -1,7 +1,21 @@
-import { coerceTrue } from './helpers.js'
+import { coerceTrue, isPlainObject } from './helpers.js'
 import { camel2Kabob } from './translators.js'
 
-// TODO: Add ability to set events...
+export function setEventHandlers(node, handlers) {
+  Object
+    .entries(handlers)
+    .forEach(([eventName, eventHandler]) => {
+      node.addEventListener(eventName, eventHandler)
+    })
+}
+
+export function setStyles(node, styles) {
+  Object
+    .entries(styles)
+    .forEach(([styleProp, styleValue]) => {
+      node.style[camel2Kabob(styleProp)] = styleValue
+    })
+}
 
 export function setAttributes(node, attributes) {
   Object
@@ -12,7 +26,11 @@ export function setAttributes(node, attributes) {
       coerceTrue(attrValue)
     ])
     .forEach(([attrName, attrValue]) => {
-      node.setAttribute(attrName, attrValue)
+      attrName === 'events' && isPlainObject(attrValue)
+        ? setEventHandlers(node, attrValue)
+        : attrName === 'style' && isPlainObject(attrValue)
+          ? setStyles(node, attrValue)
+            : node.setAttribute(attrName, attrValue)
     })
 }
 
