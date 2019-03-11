@@ -17,7 +17,5 @@
   "author": "Ian Jabour",
   "license": "MIT",
   "dependencies": {},
-  "devDependencies": {
-    "serve": "^10.1.2"
-  }
+  "devDependencies": {}
 }
