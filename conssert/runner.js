@@ -2,7 +2,7 @@ import { Harness } from './index.js'
 
 function render(suites) {
   suites.forEach(([suiteName, suiteResults]) => {
-    console.group(`%c${suiteName}`, 'color: dodgerblue')
+    console.groupCollapsed(`%c${suiteName}`, 'color: dodgerblue')
     renderSuite(suiteResults)
     console.groupEnd()
   })
