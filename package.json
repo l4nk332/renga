@@ -4,8 +4,7 @@
   "description": "A utility for quickly creating DOM elements.",
   "main": "./src/index.js",
   "scripts": {
-    "test": "./node_modules/jest/bin/jest.js",
-    "dev": "serve"
+    "test": "node ./node_modules/conssert"
   },
   "keywords": [
     "html",
