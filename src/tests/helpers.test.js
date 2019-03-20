@@ -1,5 +1,3 @@
-import { Suite } from '../../conssert/index.js'
-
 import {
   coerceTrue,
   isValidChild,

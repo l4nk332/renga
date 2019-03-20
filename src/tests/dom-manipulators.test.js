@@ -1,5 +1,3 @@
-import { Suite, Spy } from '../../conssert/index.js'
-
 import {
   appendChild,
   appendChildren,
