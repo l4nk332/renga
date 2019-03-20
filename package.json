@@ -17,5 +17,7 @@
   "author": "Ian Jabour",
   "license": "MIT",
   "dependencies": {},
-  "devDependencies": {}
+  "devDependencies": {
+    "conssert": "^19.3.1"
+  }
 }
