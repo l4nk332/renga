@@ -1,4 +1,8 @@
-import { ELEMENT_TYPES, FRAGMENT } from './constants.js'
+import { ELEMENT_TYPES, FRAGMENT, TEXT } from './utils/constants.js'
+import { setAttributes, appendChildren } from './utils/dom-manipulators.js'
+import { areValidChildren } from './utils/helpers.js'
+
+export { scopeStyles } from './scope-styles.js'
 
 function template(type) {
   return function element(attributes = null, children = null) {
@@ -10,22 +14,20 @@ function template(type) {
     const node = (
       type === FRAGMENT
         ? document.createDocumentFragment()
-        : document.createElement(type)
+        : type === TEXT
+          ? document.createTextNode(children)
+          : document.createElement(type)
     )
 
-    if (type !== FRAGMENT && attributes) setAttributes(node, attributes)
+    if (![FRAGMENT, TEXT].includes(type) && attributes) setAttributes(node, attributes)
 
-    if (children) appendChildren(node, children)
+    if (type !== TEXT && children) appendChildren(node, children)
 
     return node
   }
 }
 
-defaults = { scopeStyles }
-
-const renga = ELEMENT_TYPES.reduce((collection, type) => ({
+export const element = ELEMENT_TYPES.reduce((collection, type) => ({
   ...collection,
   [type]: template(type)
-}), defaults)
-
-export default renga
+}), {})

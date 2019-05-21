@@ -1,4 +1,5 @@
 export const FRAGMENT = 'fragment'
+export const TEXT = 'text'
 
 export const ELEMENT_TYPES = [
   'a',
@@ -98,6 +99,7 @@ export const ELEMENT_TYPES = [
   'tbody',
   'td',
   'template',
+  TEXT,
   'textarea',
   'tfoot',
   'th',
