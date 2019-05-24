@@ -7,7 +7,7 @@ A simply utility for laying down HTML with Javascript.
 Let's say you wanted to build this HTML with Javascript:
 
 ```html
-<button type="button" class="btn btn-primary">Primary</button>
+<button id="submit-btn" class="btn btn-primary">Primary</button>
 ```
 
 Normally you would need to do something like:
@@ -15,14 +15,14 @@ Normally you would need to do something like:
 ```javascript
 let button = document.createElement('button')
 button.classList.add('btn', 'btn-primary')
-button.setAttribute('type', 'button')
+button.setAttribute('id', 'submit-btn')
 button.innerText = 'Primary'
 ```
 
 With renga it's as simple as:
 
 ```javascript
-button({type: 'button', class: 'btn btn-primary'}, 'Primary')
+button({id: 'submit-btn', class: 'btn btn-primary'}, 'Primary')
 ```
 
 ## Installation
