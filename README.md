@@ -1,4 +1,4 @@
-<p align='center'><img src='assets/logo.jpg' alt='renga logo' /></p>
+<p align='center'><img src='assets/scrn.png' alt='renga logo' /></p>
 
 # renga
 
