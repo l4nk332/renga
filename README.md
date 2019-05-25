@@ -9,7 +9,7 @@ A simply utility for laying down HTML with Javascript.
 Let's say you wanted to build this HTML with Javascript:
 
 ```html
-<button id="submit-btn" class="btn btn-primary">Primary</button>
+<button id="submit-btn" class="btn btn-primary">Apply Now</button>
 ```
 
 Normally you would need to do something like:
@@ -18,13 +18,13 @@ Normally you would need to do something like:
 let button = document.createElement('button')
 button.classList.add('btn', 'btn-primary')
 button.setAttribute('id', 'submit-btn')
-button.innerText = 'Primary'
+button.innerText = 'Apply Now'
 ```
 
 With renga it's as simple as:
 
 ```javascript
-button({id: 'submit-btn', class: 'btn btn-primary'}, 'Primary')
+button({id: 'submit-btn', class: 'btn btn-primary'}, 'Apply Now')
 ```
 
 ## Installation
@@ -43,65 +43,96 @@ yarn add renga
 
 ## Building HTML
 
-To start using renga to build elements use the following import at the
-top of your file:
+To start building HTML elements with renga use the following import:
 
 ```javascript
 import { element } from 'renga'
-
-const { button, span, table, fragment, text } = element
-// ...
 ```
 
-> As you find yourself needing additional elements you can extend the
-destructing.
+At the top of the file you can then use object destructing to pull out
+element constructors as necessary:
 
-When creating elements with renga that have no attributes you can simply
-set the first parameter to a valid child.
+```javascript
+const { button, span, table, fragment, text } = element
+```
+
+When creating elements with renga that have no attributes you can
+simply set the first parameter to a valid child.
 
 **Strings become TextNode children:**
 ```javascript
-button('Primary')
-// -> <button>Primary</button>
+button('Create')
+// -> <button>Create</button>
 ```
 
 **A child can be another HTML node:**
 ```javascript
-header(h1('Title'))
-// -> <header><h1>Title</h1></header>
+header(h1('Overview'))
+// -> <header><h1>Overview</h1></header>
 ```
 
-**Use an array to set siblings as children of a given element:**
+**Use an array to set a collection of nodes as children of a given
+element:**
 ```javascript
-span(['You have ', strong('14 days'), ' remaining on your trial.'])
-// -> <span>You have <strong>14 days</strong> remaining on your trial.</span>
+span(['You have ', strong('14 days'), ' remaining on your free trial.'])
+// -> <span>You have <strong>14 days</strong> remaining on your free trial.</span>
 ```
 
 **You can arbitrarily nest the HTML structure:**
 ```javascript
 table([
+  caption('Programming Languages'),
   thead(
     tr(
-      th('Column Header')
+      th('Name'),
+      th('Creator'),
+      th('Year Released')
     )
   ),
   tbody(
     tr(
-      td('Cell Content')
+      td('Javascript'),
+      td('Brendan Eich'),
+      td('1995')
+    ),
+    tr(
+      td('Python'),
+      td('Guido van Rossum'),
+      td('1991')
+    ),
+    tr(
+      td('Ruby'),
+      td('Yukihiro Matsumoto'),
+      td('1995')
     )
   )
 ])
 
 /*
 <table>
+  <caption>Programming Languages</caption>
   <thead>
     <tr>
-      <th>Column Header</th>
+      <th>Name</th>
+      <th>Creator</th>
+      <th>Year Released</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td>Cell Content</td>
+      <td>Javascript</td>
+      <td>Brendan Eich</td>
+      <td>1995</td>
+    </tr>
+    <tr>
+      <td>Python</td>
+      <td>Guido van Rossum</td>
+      <td>1991</td>
+    </tr>
+    <tr>
+      <td>Ruby</td>
+      <td>Yukihiro Matsumoto</td>
+      <td>1995</td>
     </tr>
   </tbody>
 </table>
@@ -118,10 +149,10 @@ span(paymentText)
 
 **You can create a `DOM Fragment` using `fragment()`:**
 ```javascript
-const collection = fragment([span('First'), strong('Second'), 'Third'])
+const collection = fragment([h2('Well Done!'), p('You have completed all of your tasks.')])
 
 section(collection)
-// -> <section><span>First</span><strong>Second</strong>Third</section>
+// -> <section><h2>Well Done!</h2><p>You have completed all of your tasks.</p></section>
 ```
 
 ## Setting Attributes
@@ -129,11 +160,12 @@ section(collection)
 When you need to add attributes to an element the first argument should
 be an object containing the attributes you would like to add.
 
-The second argument would then be the children for the given node.
+The second argument should be the child or children of the element
+being created.
 
 ```javascript
-button({class: 'btn btn-primary'}, 'Primary Button')
-// -> <button class='btn btn-primary'>Primary Button</button>
+button({class: 'btn btn-danger'}, 'Delete User')
+// -> <button class='btn btn-danger'>Delete User</button>
 ```
 
 Keep in mind that renga will handle converting camelCase attribute
@@ -145,32 +177,35 @@ button({dataId: '123', dataModel: 'user', class: 'btn btn-danger'}, 'Delete User
 ```
 
 
-## Setting Events
+## Attaching Events
 
-You can set DOM events directly on a given node by adding them to the
-`events` key in the attributes object provided to the node creator:
+You can attach DOM events directly to a given node by adding them under
+the `events` key in the attributes object provided to the node
+constructor:
 
 ```javascript
-const alertButton = button({
-  class: 'btn btn-default',
+button({
+  class: 'btn btn-warning',
   events: {
-    click() { alert('Button was clicked!') }
+    click() { alert('Are you sure?') }
   }
-}, 'Show Alert')
-// -> <button class='btn btn-default'>Show Alert</button>
+}, 'Remove')
+// -> <button class='btn btn-warning'>Remove</button>
 ```
 
-## Setting Styles
+## Styling Elements
 
 There are two ways to set inline styles on a node.
 
-You can set the `style` attribute to a string of css declarations:
+1. You can set the `style` attribute to a string containing CSS
+declarations:
 
 ```javascript
 section({style: 'display: flex; flex-flow: row nowrap; align-items: center; justify-content: space-between;'})
 ```
 
-Or you can set `style` to an object containing css declarations:
+2. You can set the `style` attribute to an object containing CSS
+declarations:
 
 ```javascript
 section({
@@ -185,14 +220,16 @@ section({
 
 ## Scoping Styles
 
-An added feature supported by renga is the ability to scope css so that
-you can avoid precedence issues and keep a flat hierarchy in your
-stylesheets.
+An added feature supported by renga is the ability to scope CSS based
+on the name of a module or component.
 
-This feature was influenced by [CSS Modules](https://github.com/css-modules/css-modules)
-and the way that they allow you to scope styles to a component or module.
+This can provide a flat hierarchy in your stylesheets, making it easier
+to avoid name collisions in your class names.
 
-First we set up our scoped styles:
+> This feature was influenced by [CSS Modules](https://github.com/css-modules/css-modules).
+
+First we set up our scoped styles, providing a name to scope by
+(`ButtonGroup`):
 
 ```javascript
 import { element, scopeStyles } from 'renga'
@@ -217,7 +254,9 @@ const { classNames, styles } = scopeStyles('ButtonGroup', `
 `)
 ```
 
-We can then wrap `styles` in a `style` tag and append it as necessary:
+We can then wrap `styles` in a `style` tag and append it as necessary.
+Notice how the class names have been prefixed with the module name we
+provided:
 
 ```javascript
 style(styles)
@@ -243,7 +282,9 @@ style(styles)
 ```
 
 To set the translated class names we can use the destructured
-`classNames` variable:
+`classNames` variable. It is an object with keys corresponding to the
+class names specified in your styles and values which correlate
+to the translated names:
 
 ```javascript
 section({class: classNames.container}, [
@@ -261,9 +302,11 @@ section({class: classNames.container}, [
 */
 ```
 
-> Note: `scopeStyles()` takes an optional third argument which is a
-string to but used as a postfix hash on the translated names (turning
-`ButtonGroup__container` into `ButtonGroup__container__<hash>`).
+In the case that you would like to add a suffix to the translated
+class names `scopeStyles()` takes an optional third argument which is a
+string to but used as a postfix hash on the translated names:
+
+`ButtonGroup__container` into `ButtonGroup__container__<hash>`
 
 ## More Examples
 
