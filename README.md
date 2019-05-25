@@ -4,8 +4,6 @@
 
 # renga
 
-A simply utility for laying down HTML with Javascript.
-
 Let's say you wanted to build this HTML with Javascript:
 
 ```html
