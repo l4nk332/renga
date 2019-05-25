@@ -39,7 +39,7 @@ or with yarn:
 yarn add renga
 ```
 
-## Usage: Building HTML
+## Building HTML
 
 To start using renga to build elements use the following import at the
 top of your file:
@@ -122,7 +122,7 @@ section(collection)
 // -> <section><span>First</span><strong>Second</strong>Third</section>
 ```
 
-## Usage: Setting Attributes
+## Setting Attributes
 
 When you need to add attributes to an element the first argument should
 be an object containing the attributes you would like to add.
@@ -134,7 +134,7 @@ button({class: 'btn btn-primary'}, 'Primary Button')
 // -> <button class='btn btn-primary'>Primary Button</button>
 ```
 
-Keep in mind that if renga will handle converting camelCased attribute
+Keep in mind that renga will handle converting camelCase attribute
 names to kabob-case accordingly.
 
 ```javascript
@@ -143,7 +143,7 @@ button({dataId: '123', dataModel: 'user', class: 'btn btn-danger'}, 'Delete User
 ```
 
 
-## Usage: Setting Events
+## Setting Events
 
 You can set DOM events directly on a given node by adding them to the
 `events` key in the attributes object provided to the node creator:
@@ -158,7 +158,7 @@ const alertButton = button({
 // -> <button class='btn btn-default'>Show Alert</button>
 ```
 
-## Usage: Setting Styles
+## Setting Styles
 
 There are two ways to set inline styles on a node.
 
@@ -181,10 +181,10 @@ section({
 })
 ```
 
-## Usage: Scoping Styles
+## Scoping Styles
 
 An added feature supported by renga is the ability to scope css so that
-you can keep avoid precedence issues and keep a flat hierarchy in your
+you can avoid precedence issues and keep a flat hierarchy in your
 stylesheets.
 
 This feature was influenced by [CSS Modules](https://github.com/css-modules/css-modules)
