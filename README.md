@@ -1,4 +1,4 @@
-**THIS PROJECT IS CURRENTLY IN PROGRESS. PLEASE CHECK BACK LATER 😉**
+<p align='center'><img src='assets/logo.png' alt='renga logo' /></p>
 
 # renga
 
