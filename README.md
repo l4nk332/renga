@@ -396,8 +396,8 @@ functionality.
 
 ## Constructing Elements Conditionally
 
-In cases where we want to conditionally create elements based on a
-condition we can do so in a declarative fashion.
+In cases where we want to create elements based on a condition we can
+do so in a declarative fashion.
 
 If a child node evaluates to `false` or `null` it will be ignored:
 
