@@ -27,17 +27,19 @@ button({id: 'submit-btn', class: 'btn btn-primary'}, 'Apply Now')
 
 ## Installation
 
-Install with npm:
+To use renga with a project that is already being bundled you can:
 
-```
-npm install renga
-```
+1. Install with npm: `npm install renga`
+2. Install with yarn: `yarn add renga`
 
-or with yarn:
+If you would like to simply include renga as a script tag in your HTML
+you can:
 
-```
-yarn add renga
-```
+1. Download and include [this file](), loading it as a script tag and
+importing via browser native ESModules.
+2. Download and include [this file](), which will set `renga` as a
+global variable on `window`.
+
 
 ## Building HTML
 
@@ -302,9 +304,10 @@ section({class: classNames.container}, [
 
 In the case that you would like to add a suffix to the translated
 class names `scopeStyles()` takes an optional third argument which is a
-string to but used as a postfix hash on the translated names:
+string to but used as a postfix hash on the translated names.
 
-`ButtonGroup__container` into `ButtonGroup__container__<hash>`
+Thus `ButtonGroup__container` would become
+`ButtonGroup__container__<hash>`.
 
 ## More Examples
 
