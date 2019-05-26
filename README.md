@@ -309,18 +309,15 @@ string to but used as a postfix hash on the translated names.
 Thus `ButtonGroup__container` would become
 `ButtonGroup__container__<hash>`.
 
-## More Examples
-
-#### Dynamicly Creating Elements
+## Dynamicly Creating Elements
 
 Being that renga is simply just Javascript you can use constructs like
-`Array.map()`, `Array.filter()`, etc to dynamicly create elements given
-some data.
+`Array.map()` to dynamicly create elements given some data.
 
 ```javascript
 import { element } from 'renga'
 
-const { a, div, h5, h6, img, p } from 'element'
+const { a, div, h5, h6, img } from 'element'
 
 const BASE_PROFILE_URL = '/players/profile/'
 
@@ -392,3 +389,56 @@ console.log(playerList)
 </div>
 */
 ```
+
+We can easily extend this example by adding an `Array.filter()`
+prior to the `players.map()` in cases where we want filter
+functionality.
+
+## Constructing Elements Conditionally
+
+In cases where we want to conditionally create elements based on a
+condition we can do so in a declarative fashion.
+
+If a child node evaluates to `false` or `null` it will be ignored:
+
+```javascript
+import { element } from 'renga'
+
+const { a, div, h5, h6, img } from 'element'
+
+const player = {
+  name: 'Jason Kidd',
+  team: 'New Jersey Nets',
+  avatar: '/img/jkidd.png',
+  id: '5',
+  isRetired: true
+}
+
+const playerCard = (
+  div({class: 'card'},
+    div({class: 'card-body'}, [
+      h5({class: 'card-title'}, player.name),
+      h6({class: 'card-subtitle mb-2 text-muted'}, player.team),
+      img({src: player.avatar, class: 'card-img-top', alt: player.name}),
+      !player.isRetired && (
+        a({href: `${BASE_PROFILE_URL}${player.id}`, class: 'card-link'}, 'View Profile')
+      )
+    ])
+  )
+)
+
+console.log(playerCard)
+
+/*
+<div class="card">
+  <div class="card-body">
+    <h5 class="card-title">Jason Kidd</h5>
+    <h6 class="card-subtitle mb-2 text-muted">New Jersey Nets</h6>
+    <img src="/img/jkidd.png" class="card-img-top" alt="Jason Kidd">
+  </div>
+</div>
+*/
+```
+
+As shown above because `!player.isRetired` evaluates to `false` the
+`View Profile` link will not be created.
