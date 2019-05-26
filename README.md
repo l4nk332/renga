@@ -311,4 +311,84 @@ Thus `ButtonGroup__container` would become
 
 ## More Examples
 
-Will have examples pulled from bootstrap and translated here.
+#### Dynamicly Creating Elements
+
+Being that renga is simply just Javascript you can use constructs like
+`Array.map()`, `Array.filter()`, etc to dynamicly create elements given
+some data.
+
+```javascript
+import { element } from 'renga'
+
+const { a, div, h5, h6, img, p } from 'element'
+
+const BASE_PROFILE_URL = '/players/profile/'
+
+const players = [
+  { name: 'Kawhi Leonard', team: 'Toronto Raptors', avatar: '/img/kleonard.png', id: '2' },
+  { name: 'Damian Lillard', team: 'Portland Trailblazers', avatar: '/img/dlillard.png', id: '0' },
+  { name: 'Stephen Curry', team: 'Golden State Warriors', avatar: '/img/scurry.png', id: '30' },
+  { name: 'James Harden', team: 'Houston Rockets', avatar: '/img/jharden.png', id: '13' },
+  { name: 'Lebron James', team: 'Los Angeles Lakers', avatar: '/img/ljames.png', id: '23' }
+]
+
+const playerList = (
+  div({class: 'card-group'}, players.map(({ name, team, avatar, id }) => (
+    div({class: 'card'},
+      div({class: 'card-body'}, [
+        h5({class: 'card-title'}, name),
+        h6({class: 'card-subtitle mb-2 text-muted'}, team),
+        img({src: avatar, class: 'card-img-top', alt: name}),
+        a({href: `${BASE_PROFILE_URL}${id}`, class: 'card-link'}, 'View Profile')
+      ])
+    )
+  )))
+)
+
+console.log(playerList)
+
+/*
+<div class="card-group">
+  <div class="card">
+    <div class="card-body">
+      <h5 class="card-title">Kawhi Leonard</h5>
+      <h6 class="card-subtitle mb-2 text-muted">Toronto Raptors</h6>
+      <img src="/img/kleonard.png" class="card-img-top" alt="Kawhi Leonard">
+      <a href="/players/profile/2" class="card-link">View Profile</a>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-body">
+      <h5 class="card-title">Damian Lillard</h5>
+      <h6 class="card-subtitle mb-2 text-muted">Portland Trailblazers</h6>
+      <img src="/img/dlillard.png" class="card-img-top" alt="Damian Lillard">
+      <a href="/players/profile/0" class="card-link">View Profile</a>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-body">
+      <h5 class="card-title">Stephen Curry</h5>
+      <h6 class="card-subtitle mb-2 text-muted">Golden State Warriors</h6>
+      <img src="/img/scurry.png" class="card-img-top" alt="Stephen Curry">
+      <a href="/players/profile/30" class="card-link">View Profile</a>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-body">
+      <h5 class="card-title">James Harden</h5>
+      <h6 class="card-subtitle mb-2 text-muted">Houston Rockets</h6>
+      <img src="/img/jharden.png" class="card-img-top" alt="James Harden">
+      <a href="/players/profile/13" class="card-link">View Profile</a>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-body">
+      <h5 class="card-title">Lebron James</h5>
+      <h6 class="card-subtitle mb-2 text-muted">Los Angeles Lakers</h6>
+      <img src="/img/ljames.png" class="card-img-top" alt="Lebron James">
+      <a href="/players/profile/23" class="card-link">View Profile</a>
+    </div>
+  </div>
+</div>
+*/
+```
