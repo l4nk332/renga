@@ -35,10 +35,10 @@ To use renga with a project that is already being bundled you can:
 If you would like to simply include renga as a script tag in your HTML
 you can:
 
-1. Download and include [this file](), loading it as a script tag and
-importing via browser native ESModules.
-2. Download and include [this file](), which will set `renga` as a
-global variable on `window`.
+1. Download [this file](), include it as a script tag, and access
+`renga` as a native ESModule import.
+2. Download [this file](), include it as a script tag, and access
+`renga` as a global variable stored on `window`.
 
 
 ## Building HTML
