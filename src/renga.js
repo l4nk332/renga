@@ -1,6 +1,6 @@
 import { ELEMENT_TYPES, FRAGMENT, TEXT } from './utils/constants.js'
 import { setAttributes, appendChildren } from './utils/dom-manipulators.js'
-import { areValidChildren } from './utils/helpers.js'
+import { areValidChildren, shouldNullify } from './utils/helpers.js'
 
 export { scopeStyles } from './scope-styles.js'
 
@@ -15,7 +15,7 @@ function template(type) {
       type === FRAGMENT
         ? document.createDocumentFragment()
         : type === TEXT
-          ? document.createTextNode(children)
+          ? document.createTextNode(shouldNullify(children) ? '' : children)
           : document.createElement(type)
     )
 

@@ -6,7 +6,8 @@ import {
   isOneOfType,
   extractClassNames,
   unique,
-  deepEquals
+  deepEquals,
+  shouldNullify
 } from '../utils/helpers.js'
 
 new Suite('coerceTrue')
@@ -61,6 +62,8 @@ new Suite('areValidChildren')
     ['Should return true if provided with valid children', assert => {
       assert(areValidChildren('Person')).equalTo(true)
       assert(areValidChildren('')).equalTo(true)
+      assert(areValidChildren(false)).equalTo(true)
+      assert(areValidChildren(null)).equalTo(true)
       assert(areValidChildren([])).equalTo(true)
       assert(areValidChildren(['Person', 'is', 'good'])).equalTo(true)
 
@@ -70,13 +73,12 @@ new Suite('areValidChildren')
       assert(areValidChildren(aTag)).equalTo(true)
       assert(areValidChildren([aTag, pTag])).equalTo(true)
       assert(areValidChildren(['Person', pTag])).equalTo(true)
+      assert(areValidChildren([false, null])).equalTo(true)
     }],
     ['Should return false if provided with invalid children', assert => {
       assert(areValidChildren({})).equalTo(false)
       assert(areValidChildren({name: 'Luke'})).equalTo(false)
       assert(areValidChildren(true)).equalTo(false)
-      assert(areValidChildren(false)).equalTo(false)
-      assert(areValidChildren(null)).equalTo(false)
       assert(areValidChildren([
         0, null, true, 'Andy', document.createElement('b')
       ])).equalTo(false)
@@ -215,5 +217,30 @@ new Suite('deepEquals')
       assert(deepEquals({0: 1}, [1])).equalTo(false)
       assert(deepEquals({a: 1, b: [{c: 4}, [14]]}, {a: 1, b: [{c: 4}, 14]}))
         .equalTo(false)
+    }]
+  ])
+
+new Suite('shouldNullify')
+  .tests([
+    ['Should return true if child received is null or false', assert => {
+      assert(shouldNullify(null)).equalTo(true)
+      assert(shouldNullify(true ? null : true)).equalTo(true)
+      assert(shouldNullify(false)).equalTo(true)
+      assert(shouldNullify(false && true)).equalTo(true)
     }],
+    ['Should return false if child received is any value other than null or false', assert => {
+      assert(shouldNullify(0)).equalTo(false)
+      assert(shouldNullify(1)).equalTo(false)
+      assert(shouldNullify('')).equalTo(false)
+      assert(shouldNullify('null')).equalTo(false)
+      assert(shouldNullify('false')).equalTo(false)
+      assert(shouldNullify({})).equalTo(false)
+      assert(shouldNullify([])).equalTo(false)
+      assert(shouldNullify(true)).equalTo(false)
+      assert(shouldNullify(false || true)).equalTo(false)
+      assert(shouldNullify(null || true)).equalTo(false)
+      assert(shouldNullify(NaN)).equalTo(false)
+      assert(shouldNullify(Boolean)).equalTo(false)
+      assert(shouldNullify(Number)).equalTo(false)
+    }]
   ])

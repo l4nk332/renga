@@ -6,9 +6,15 @@ export function coerceTrue(value) {
   )
 }
 
+export function shouldNullify(child) {
+  return child === null || child === false
+}
+
 export function isValidChild(child) {
   return (
     isOneOfType(['string', 'number'], child) ||
+    child === false ||
+    child === null ||
     (isPlainObject(child) &&
      'nodeName' in child &&
      'nodeType' in child)

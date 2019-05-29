@@ -1,6 +1,18 @@
 import { element, scopeStyles } from '../renga.js'
 
-const { style, p, span, h1, canvas, div, button, fragment, text, form } = element
+const {
+  button,
+  canvas,
+  div,
+  form,
+  fragment,
+  h1,
+  p,
+  span,
+  strong,
+  style,
+  text
+} = element
 
 new Suite('renga - elements')
   .tests([
@@ -9,6 +21,19 @@ new Suite('renga - elements')
       assert(span().outerHTML).equalTo(document.createElement('span').outerHTML)
       assert(h1().outerHTML).equalTo(document.createElement('h1').outerHTML)
       assert(canvas().outerHTML).equalTo(document.createElement('canvas').outerHTML)
+    }],
+    ['Should allow for elements to be created conditionally', assert => {
+      const DAY = 1
+
+      assert(div([
+        DAY === 0 && strong('Today'),
+        DAY === 1 && strong('Tomorrow'),
+        DAY === 2 && strong('The After Tomorrow'),
+        DAY === 0 ? ' is' : null,
+        (DAY === 1 || DAY === 2) && ' will be',
+        ' your last chance to buy tickets.'
+      ]).outerHTML)
+        .equalTo('<div><strong>Tomorrow</strong> will be your last chance to buy tickets.</div>')
     }],
     ['Should allow for single text node child elements to be created', assert => {
       const testP = p('paragraph')
@@ -141,6 +166,8 @@ new Suite('renga - elements')
 
       assert(testText.innerText).equalTo(compareText.innerText)
       assert(span(testText).outerHTML).equalTo('<span>Text Node</span>')
+      assert(span(text(null)).outerHTML).equalTo('<span></span>')
+      assert(span(text(false)).outerHTML).equalTo('<span></span>')
     }],
     ['Should work with scopeStyles', assert => {
       const styles = `

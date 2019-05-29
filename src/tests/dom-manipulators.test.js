@@ -46,7 +46,16 @@ function generateAppendNodeTests(appendFn) {
 
       appendFn(div, ' will take you to Google search...')
       assert(div.innerHTML).equalTo('<a href="https://google.com">Link to Google</a> will take you to Google search...')
-    }]
+    }],
+    ['Should not append a value if the shouldNullify is true', assert => {
+      let div = document.createElement('div')
+      assert(div.innerText).equalTo('')
+      appendFn(div, false && 'This is a div element.')
+      assert(div.innerText).equalTo('')
+
+      appendFn(div, null && ' With another node added.')
+      assert(div.innerText).equalTo('')
+    }],
   ]
 }
 
@@ -87,7 +96,24 @@ new Suite('appendChildren')
         'test'
       ])
       assert(div.innerHTML).equalTo('This<a></a>is<span></span>a<address></address>test')
-    }]
+    }],
+    ['Should append only children that do not pass shouldNullify', assert => {
+      let div = document.createElement('div')
+      assert(div.innerText).equalTo('')
+
+      appendChildren(div, [
+        'This',
+        Boolean(0) && document.createElement('hr'),
+        ' is',
+        false && ' not',
+        ' a',
+        ' test',
+        true ? null : '?',
+        '.'
+      ])
+
+      assert(div.innerText).equalTo('This is a test.')
+    }],
   ])
 
 new Suite('setEventHandlers')

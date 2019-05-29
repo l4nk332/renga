@@ -1,4 +1,4 @@
-import { coerceTrue, isPlainObject } from './helpers.js'
+import { coerceTrue, isPlainObject, shouldNullify } from './helpers.js'
 import { camel2Kabob } from './translators.js'
 
 export function setEventHandlers(node, handlers) {
@@ -35,13 +35,13 @@ export function setAttributes(node, attributes) {
 }
 
 export function appendChild(node, child) {
-  child = (
-    typeof child === 'string'
-      ? document.createTextNode(child)
-      : child
-  )
-
-  node.appendChild(child)
+  if (!shouldNullify(child)) {
+    node.appendChild(
+      typeof child === 'string'
+        ? document.createTextNode(child)
+        : child
+    )
+  }
 }
 
 export function appendChildren(node, children) {

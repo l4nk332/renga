@@ -57,7 +57,7 @@ const { button, span, table, fragment, text } = element
 ```
 
 When creating elements with renga that have no attributes you can
-simply set the first parameter to a valid child.
+simply set the first parameter as any valid child.
 
 **Strings become TextNode children:**
 ```javascript
