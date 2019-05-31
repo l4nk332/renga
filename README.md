@@ -349,7 +349,7 @@ string to but used as a postfix hash on the translated names.
 Thus `ButtonGroup__container` would become
 `ButtonGroup__container__<hash>`.
 
-## Dynamicly Creating Elements
+## Dynamically Creating Elements
 
 Being that renga is simply just Javascript you can use constructs like
 `Array.map()` to dynamicly create elements given some data.
