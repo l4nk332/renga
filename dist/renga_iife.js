@@ -1,5 +1,5 @@
 /*
- * renga v1.0.1 (https://github.com/l4nk332/renga)
+ * renga v1.0.2 (https://github.com/l4nk332/renga)
  * Copyright (c) 2019 Ian Jabour
  * Licensed under MIT (https://github.com/l4nk332/renga/blob/master/LICENSE)
 */
