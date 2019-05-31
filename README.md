@@ -382,11 +382,11 @@ function PlayerCard({ name, team, avatar, id }) {
   )
 }
 
-const CardGroup = (
+const PlayerGroup = (
   div({class: 'card-group'}, players.map(PlayerCard))
 )
 
-console.log(CardGroup)
+console.log(PlayerGroup)
 
 /*
 <div class="card-group">
