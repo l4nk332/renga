@@ -23,9 +23,11 @@ With renga it's as simple as:
 button({id: 'submit-btn', class: 'btn btn-primary'}, 'Apply Now')
 ```
 
+The project sits at around `~8kb` in size (`~4kb` minified) and has **zero production dependencies**.
+
 ## Browser Support
 
-Renga supports all major browsers as well as IE 10 and 11.
+All major browsers are supported as well as IE 10 and 11.
 
 ## Installation - Node Module
 
