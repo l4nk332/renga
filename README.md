@@ -23,21 +23,60 @@ With renga it's as simple as:
 button({id: 'submit-btn', class: 'btn btn-primary'}, 'Apply Now')
 ```
 
-## Installation
+## Browser Support
 
-To use renga with a project that is already being bundled you can:
+Renga supports all major browsers as well as IE 10 and 11.
 
-1. Install with npm: `npm install renga`
-2. Install with yarn: `yarn add renga`
+## Installation - Node Module
+
+To use renga with a project that is already being bundled you can
+
+install with npm: `npm install renga`
+
+or yarn: `yarn add renga`
+
+then import from `renga`:
+
+```javascript
+import { element } from 'renga'
+
+const { h1 } = element
+
+h1('Title Text')
+```
+
+## Installation - Script Tag
 
 If you would like to simply include renga as a script tag in your HTML
 you can:
 
-1. Download [this file](), include it as a script tag, and access
-`renga` as a native ESModule import.
-2. Download [this file](), include it as a script tag, and access
-`renga` as a global variable stored on `window`.
+Download the [ESModule build](https://raw.githubusercontent.com/l4nk332/renga/master/dist/renga.min.js),
+include it as a script tag, and access `renga` as a native ESModule
+import.
 
+```html
+<script type='module' src='renga.js'></script>
+<script type='module'>
+  import { element } from 'renga'
+
+  const { h1 } = element
+
+  h1('Title Text')
+</script>
+```
+
+Or you can download the [IIFE build](https://raw.githubusercontent.com/l4nk332/renga/master/dist/renga_iife.min.js),
+include it as a script tag, and access `renga` as a global variable
+stored on `window`.
+
+```html
+<script type='text/javascript' src='renga_iife.js'></script>
+<script>
+  const { h1 } = renga.element
+
+  h1('Title Text')
+</script>
+```
 
 ## Building HTML
 
