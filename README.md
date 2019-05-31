@@ -269,7 +269,7 @@ to avoid name collisions in your class names.
 > This feature was influenced by [CSS Modules](https://github.com/css-modules/css-modules).
 
 First we set up our scoped styles, providing a name to scope by
-(`ButtonGroup`):
+(i.e `ButtonGroup`):
 
 ```javascript
 import { element, scopeStyles } from 'renga'
