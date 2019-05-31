@@ -369,8 +369,8 @@ const players = [
   { name: 'Lebron James', team: 'Los Angeles Lakers', avatar: '/img/ljames.png', id: '23' }
 ]
 
-const playerList = (
-  div({class: 'card-group'}, players.map(({ name, team, avatar, id }) => (
+function PlayerCard({ name, team, avatar, id }) {
+  return (
     div({class: 'card'},
       div({class: 'card-body'}, [
         h5({class: 'card-title'}, name),
@@ -379,10 +379,14 @@ const playerList = (
         a({href: `${BASE_PROFILE_URL}${id}`, class: 'card-link'}, 'View Profile')
       ])
     )
-  )))
+  )
+}
+
+const CardGroup = (
+  div({class: 'card-group'}, players.map(PlayerCard))
 )
 
-console.log(playerList)
+console.log(CardGroup)
 
 /*
 <div class="card-group">
@@ -446,7 +450,7 @@ import { element } from 'renga'
 
 const { a, div, h5, h6, img } from 'element'
 
-const player = {
+const jasonKidd = {
   name: 'Jason Kidd',
   team: 'New Jersey Nets',
   avatar: '/img/jkidd.png',
@@ -454,20 +458,22 @@ const player = {
   isRetired: true
 }
 
-const playerCard = (
-  div({class: 'card'},
-    div({class: 'card-body'}, [
-      h5({class: 'card-title'}, player.name),
-      h6({class: 'card-subtitle mb-2 text-muted'}, player.team),
-      img({src: player.avatar, class: 'card-img-top', alt: player.name}),
-      !player.isRetired && (
-        a({href: `${BASE_PROFILE_URL}${player.id}`, class: 'card-link'}, 'View Profile')
-      )
-    ])
+function PlayerCard({ name, team, avatar, id, isRetired }) {
+  return (
+    div({class: 'card'},
+      div({class: 'card-body'}, [
+        h5({class: 'card-title'}, name),
+        h6({class: 'card-subtitle mb-2 text-muted'}, team),
+        img({src: avatar, class: 'card-img-top', alt: name}),
+        !isRetired && (
+          a({href: `${BASE_PROFILE_URL}${id}`, class: 'card-link'}, 'View Profile')
+        )
+      ])
+    )
   )
-)
+}
 
-console.log(playerCard)
+console.log(PlayerCard(jasonKidd))
 
 /*
 <div class="card">
@@ -480,5 +486,5 @@ console.log(playerCard)
 */
 ```
 
-As shown above because `!player.isRetired` evaluates to `false` the
+As shown above because `!isRetired` evaluates to `false` the
 `View Profile` link will not be created.
