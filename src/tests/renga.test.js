@@ -1,4 +1,5 @@
-import { element, scopeStyles } from '../renga.js'
+import { element } from '../renga.js'
+import { scopeStyles } from '../scope-styles.js'
 
 const {
   button,

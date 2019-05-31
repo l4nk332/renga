@@ -2,8 +2,6 @@ import { ELEMENT_TYPES, FRAGMENT, TEXT } from './utils/constants.js'
 import { setAttributes, appendChildren } from './utils/dom-manipulators.js'
 import { areValidChildren, shouldNullify } from './utils/helpers.js'
 
-export { scopeStyles } from './scope-styles.js'
-
 function template(type) {
   return function element(attributes = null, children = null) {
     if (areValidChildren(attributes)) {
