@@ -30,10 +30,13 @@ Renga supports all major browsers as well as IE 10 and 11.
 ## Installation - Node Module
 
 To use renga with a project that is already being bundled you can
+install with npm:
 
-install with npm: `npm install renga`
+`npm install renga`
 
-or yarn: `yarn add renga`
+or yarn:
+
+`yarn add renga`
 
 then import from `renga`:
 
@@ -55,7 +58,7 @@ include it as a script tag, and access `renga` as a native ESModule
 import.
 
 ```html
-<script type='module' src='renga.js'></script>
+<script type='module' src='renga.min.js'></script>
 <script type='module'>
   import { element } from 'renga'
 
@@ -70,7 +73,7 @@ include it as a script tag, and access `renga` as a global variable
 stored on `window`.
 
 ```html
-<script type='text/javascript' src='renga_iife.js'></script>
+<script type='text/javascript' src='renga_iife.min.js'></script>
 <script>
   const { h1 } = renga.element
 
