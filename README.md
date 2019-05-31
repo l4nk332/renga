@@ -1,5 +1,3 @@
-**THIS PROJECT IS NOT READY YET! PLEASE COME BACK LATER 😉**
-
 <p align='center'><img src='assets/logo.png' alt='renga logo' /></p>
 
 # renga
