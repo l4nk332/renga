@@ -62,7 +62,7 @@ import.
 ```html
 <script type='module' src='renga.min.js'></script>
 <script type='module'>
-  import { element } from 'renga'
+  import { element } from './renga.min.js'
 
   const { h1 } = element
 
