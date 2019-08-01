@@ -125,29 +125,29 @@ span(['You have ', strong('14 days'), ' remaining on your free trial.'])
 table([
   caption('Programming Languages'),
   thead(
-    tr(
+    tr([
       th('Name'),
       th('Creator'),
       th('Year Released')
-    )
+    ])
   ),
-  tbody(
-    tr(
+  tbody([
+    tr([
       td('Javascript'),
       td('Brendan Eich'),
       td('1995')
-    ),
-    tr(
+    ]),
+    tr([
       td('Python'),
       td('Guido van Rossum'),
       td('1991')
-    ),
-    tr(
+    ]),
+    tr([
       td('Ruby'),
       td('Yukihiro Matsumoto'),
       td('1995')
-    )
-  )
+    ])
+  ])
 ])
 
 /*
