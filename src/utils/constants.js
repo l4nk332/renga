@@ -18,6 +18,7 @@ export const ELEMENT_TYPES = [
   'canvas',
   'caption',
   'cite',
+  'code',
   'col',
   'colgroup',
   'data',
